@@ -8,3 +8,7 @@ mkdir DEPOLY_APP
 cd DEPOLY_APP
 ansible-galaxy init deploy_pp
 ```
+Роль
+установка postgresql
+
+

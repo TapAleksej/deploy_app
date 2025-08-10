@@ -1,0 +1,6 @@
+---
+# vars file for deploy_visits
+db_user: app_user
+db_name: visits_db
+password: visitspass
+postgres_version: 17

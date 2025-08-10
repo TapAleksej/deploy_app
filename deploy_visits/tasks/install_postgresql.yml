@@ -1,0 +1,27 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Install PostgreSQL
+  apt:
+    name: postgresql postgresql-contrib
+    state: present
+
+- name: Ensure PostgreSQL is running and enabled
+  service:
+    name: postgresql
+    state: started
+    enabled: yes
+
+- name: Create a new PostgreSQL user
+  postgresql_user:
+    db: postgres
+    name: "{{ db_user }}"
+    password: "{{ db_password }}"
+    role_attr_flags: ALL
+
+- name: Create a new database
+  postgresql_db:
+    name: "{{ db_name }}"
+    owner: "{{ db_user }}"
