@@ -2,24 +2,19 @@ from flask import Flask, jsonify
 import psycopg2
 import redis
 import os
+from dotenv import load_dotenv
+
+load_dotenv(dotenv_path='./.env')
 
 app = Flask(__name__)
 
 # Подключение к PostgreSQL
 conn = psycopg2.connect(
   dbname=os.getenv('POSTGRES_DB'),
-  user=os.getenv('app_user'),
+  user=os.getenv('POSTGRES_USER'),
   password=os.getenv('POSTGRES_PASSWORD'),
   host=os.getenv('POSTGRES_HOST')
 )
-
-#conn = psycopg2.connect(
-#  dbname="visits_db",
-#  user="app_user",  # Используйте роль postgres
-#  password="visitspass",  # Укажите пароль роли postgres
-#  host="localhost",
-#  port="5432"
-#)
 
 # Подключение к Redis
 cache = redis.Redis(host=os.getenv('REDIS_HOST'), port=6379, decode_responses=True)

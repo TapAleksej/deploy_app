@@ -25,7 +25,10 @@
   pip:
     name: "{{ item }}"
     virtualenv: "{{ prj_dir }}/.venv"
+    state: present
   loop:
     - flask
     - redis
     - psycopg2
+    - dotenv
+

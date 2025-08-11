@@ -7,3 +7,16 @@
       - acl
     update_cache: yes
 
+- name: Install deps
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - python3-venv
+    - python3-pip
+
+
+
+
+
+

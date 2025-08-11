@@ -7,4 +7,15 @@ postgres_password: visitspass
 postgres_version: 17
 login_host: localhost
 prj_dir: /home/ansible/Visit
-full_access_role_name: admin
+#full_access_role_name: admin
+redis_port: 6379
+redis_bind: "127.0.0.1"
+redis_password: "visitspass"
+redis_logfile: "/var/log/redis/redis.log"
+redis_maxmemory: "1gb"
+redis_maxmemory_policy: "allkeys-lru"
+redis_dbfilename: "dump.rdb"
+redis_dir: "/var/lib/redis"
+redis_appendonly: "yes"
+redis_appendfilename: "appendonly.aof"
+redis_appendfsync: "everysec"

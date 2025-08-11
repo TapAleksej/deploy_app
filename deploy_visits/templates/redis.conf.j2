@@ -1,0 +1,35 @@
+# redis.conf.j2
+
+# Порт Redis
+port {{ redis_port }}
+
+# Адрес привязки
+bind {{ redis_bind }}
+
+# Пароль для аутентификации
+# {% if redis_password %}
+# requirepass {{ redis_password }}
+# {% endif %}
+
+# Режим демона
+daemonize {{ redis_daemonize | default('yes') }}
+
+# Логирование
+logfile {{ redis_logfile }}
+loglevel {{ redis_loglevel | default('notice') }}
+
+# Ограничение памяти
+maxmemory {{ redis_maxmemory }}
+maxmemory-policy {{ redis_maxmemory_policy | default('allkeys-lru') }}
+
+# RDB сохранение
+save 900 1
+save 300 10
+save 60 10000
+dbfilename {{ redis_dbfilename }}
+dir {{ redis_dir }}
+
+# AOF
+appendonly {{ redis_appendonly | default('yes') }}
+appendfilename "{{ redis_appendfilename }}"
+appendfsync {{ redis_appendfsync | default('everysec') }}
