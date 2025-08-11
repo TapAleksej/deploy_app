@@ -1,2 +1,6 @@
 ---
-- include_tasks: inst.yml
+
+#- include_tasks: prepare.yml
+#- include_tasks: install_postgres.yml
+- include_tasks: create_db.yml
+- include_tasks: execute_app.yml

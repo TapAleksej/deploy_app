@@ -2,5 +2,9 @@
 # vars file for deploy_visits
 db_user: app_user
 db_name: visits_db
-password: visitspass
+db_port: 5432
+postgres_password: visitspass
 postgres_version: 17
+login_host: 127.0.0.1
+prj_dir: /home/ansible/Visit
+full_access_role_name: admin

@@ -1,0 +1,49 @@
+---
+- name:  Create user
+  become: true
+  become_user: postgres
+  postgresql_user:
+    name: "{{ db_user }}"
+    password:  "{{ postgres_password }}"
+
+- name: Create db
+  become: true
+  become_user: postgres
+  postgresql_db:
+    name: "{{ db_name }}"
+    owner: "{{ db_user }}"
+
+
+- name: Create full-access role
+  become: true
+  become_user: postgres
+  postgresql_user:
+    name: "{{ full_access_role_name }}"
+    password: "{{ postgres_password }}"
+    role_attr_flags: SUPERUSER,CREATEDB,CREATEROLE,LOGIN
+    state: present
+
+
+# GRANT ALL PRIVILEGES ON DATABASE visits_db TO db_user;
+- name: Grant db user access to app db
+  become: true
+  become_user: postgres
+  postgresql_privs:
+    type: database
+    database: "{{ db_name }}"
+    roles: "{{ full_access_role_name }}"
+    grant_option: yes
+    privs: all
+
+- name: Create table visits (id SERIAL PRIMARY KEY, timestamp TIMESTAMP DEFAULT NOW())
+  postgresql_query:
+    db: "{{ db_name }}"
+    login_user: "{{ db_user }}"
+    login_password: "{{ postgres_password }}"
+    login_host: "{{ login_host }}"
+    login_port: "{{ db_port }}"
+    query: |
+         CREATE TABLE IF NOT EXISTS visits (
+            id SERIAL PRIMARY KEY,
+            timestamp TIMESTAMP DEFAULT NOW()
+          );

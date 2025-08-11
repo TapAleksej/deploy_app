@@ -1,0 +1,48 @@
+---
+- name: Check if app folder exists
+  file:
+    path: "{{ prj_dir }}"
+    state: directory
+
+- name: copy app.py
+  copy:
+    src: app.py
+    dest: "{{ prj_dir }}"
+
+- name: copy env
+  template:
+    src: env_file.j2
+    dest: "{{ prj_dir }}/.env"
+
+# Python
+- name: Create venv
+  command: python3 -m venv "{{ prj_dir }}/.venv"
+  args:
+    creates: "{{ prj_dir }}/.venv"
+
+
+- name: Install requiments
+  pip:
+    name: "{{ item }}"
+    virtualenv: "{{ prj_dir }}/.venv"
+  loop:
+    - flask
+    - redis
+    - psycopg2
+
+# service syste
+- name: Create service
+  template:
+    src: myapp.service.j2
+    dest: /etc/systemd/system/visit.service
+
+- name: Reload systemd
+  systemd_service:
+    daemon_reload: true
+
+- name: Start myapp
+  systemd_service:
+    name: visit.service
+    state: started
+
+

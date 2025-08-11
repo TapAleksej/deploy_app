@@ -1,0 +1,9 @@
+---
+- name: install packages
+  package:
+    name:
+      - gnupg2
+      - python3-psycopg2
+      - acl
+    update_cache: yes
+
