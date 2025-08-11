@@ -5,6 +5,6 @@ db_name: visits_db
 db_port: 5432
 postgres_password: visitspass
 postgres_version: 17
-login_host: 127.0.0.1
+login_host: localhost
 prj_dir: /home/ansible/Visit
 full_access_role_name: admin

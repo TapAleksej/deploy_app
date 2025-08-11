@@ -14,16 +14,6 @@
     owner: "{{ db_user }}"
 
 
-- name: Create full-access role
-  become: true
-  become_user: postgres
-  postgresql_user:
-    name: "{{ full_access_role_name }}"
-    password: "{{ postgres_password }}"
-    role_attr_flags: SUPERUSER,CREATEDB,CREATEROLE,LOGIN
-    state: present
-
-
 # GRANT ALL PRIVILEGES ON DATABASE visits_db TO db_user;
 - name: Grant db user access to app db
   become: true
@@ -31,9 +21,11 @@
   postgresql_privs:
     type: database
     database: "{{ db_name }}"
-    roles: "{{ full_access_role_name }}"
+    roles: "{{ db_user }}"
     grant_option: yes
     privs: all
+    state: present
+
 
 - name: Create table visits (id SERIAL PRIMARY KEY, timestamp TIMESTAMP DEFAULT NOW())
   postgresql_query:
