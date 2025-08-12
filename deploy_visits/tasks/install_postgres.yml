@@ -25,3 +25,14 @@
     name: postgresql
     state: started
     enabled: yes
+
+# Ensure the temporary directory exists
+# create tmp directory for create user in postgre
+- name: Create Ansible remote temporary directory
+  become: yes
+  file:
+    path: "{{ ansible_remote_tmp_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "{{ ansible_remote_tmp_mode }}"

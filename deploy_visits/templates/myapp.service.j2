@@ -3,8 +3,8 @@ Description=Visits app
 After=network.target
 
 [Service]
-Type=Simple
-WorkDirectory={{ prj_dir }}
+Type=simple
+WorkingDirectory={{ prj_dir }}
 ExecStart={{ prj_dir }}/.venv/bin/python3 {{ prj_dir }}/app.py
 Restart=on-failure
 
