@@ -1,0 +1,31 @@
+---
+- name: check present git in remote hosts
+  command:  git --version
+  register: git_data
+  ignore_errors: yes
+
+- name: if exists git then print mesage
+  debug:
+    msg: "{{ git_data.stdout }} on {{ inventory_hostname }} is installed"
+  when:  git_data.rc == 0
+
+- name: if not exists git then print mesage
+  debug:
+    msg: "git  on {{ inventory_hostname }} is not installed"
+  when:  git_data.rc != 0
+
+- name: Check if app folder exists
+  become: true
+  file:
+    path: "{{ prj_dir }}"
+    state: directory
+
+- name: git repo clone
+  git:
+    repo: 'https://gitlab.com/devops201206/visits.git'
+    dest: "{{ prj_dir }}"
+
+- name: copy env
+  template:
+    src: env_file.j2
+    dest: "{{ prj_dir }}/.env"

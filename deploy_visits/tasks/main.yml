@@ -1,4 +1,5 @@
 ---
+- include_tasks: clone_repogit.yml
 - include_tasks: prepare.yml
 - include_tasks: install_postgres.yml
 - include_tasks: create_db.yml
